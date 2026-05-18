@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havnest x KRATE — Klatki kenelowe na zamówienie</title>
+<meta name="description" content="Dwie filozofie. Jedna pracownia. Klatki kenelowe spawane recznie w Polsce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Barlow',sans-serif;background:#111;color:#fff}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit;background:none}
+:root{
+  --hd:#085041;--hm:#1D9E75;--hl:#9FE1CB;--hb:#F5EFE6;--ho:#C8956C;
+  --kb:#1C1C1A;--ks:#4A4744;--kn:#F2F0ED;--kr:#C0392B;--ksa:#7C5A3A;--kw:#5C3D1E;
+}
+.view{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity .45s ease;overflow-y:auto;overflow-x:hidden}
+.view.active{opacity:1;pointer-events:all}
+
+/* HOME */
+#view-home{display:grid;grid-template-columns:1fr 1fr;height:100%;overflow:hidden}
+.hh{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem 3.5rem;overflow:hidden;cursor:pointer;transition:flex .65s cubic-bezier(.4,0,.2,1)}
+.hh:hover{flex:1.15}
+.hh-hav{background:var(--hb)}
+.hh-hav::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 25% 80%,rgba(8,80,65,.18) 0%,transparent 55%),radial-gradient(ellipse at 75% 15%,rgba(200,149,108,.12) 0%,transparent 50%),linear-gradient(170deg,rgba(8,80,65,.04) 0%,rgba(8,80,65,.22) 100%)}
+.hh-hav::after{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(29,158,117,.12) 0%,transparent 70%)}
+.hh-krt{background:var(--kb)}
+.hh-krt::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 47px,rgba(255,255,255,.028) 48px),repeating-linear-gradient(90deg,transparent,transparent 47px,rgba(255,255,255,.028) 48px)}
+.hh-krt::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 80% 80%,rgba(192,57,43,.14) 0%,transparent 55%),linear-gradient(160deg,rgba(192,57,43,.04) 0%,rgba(0,0,0,.5) 100%)}
+.split-div{position:fixed;top:0;bottom:0;left:50%;width:1px;z-index:10;pointer-events:none;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.28) 25%,rgba(255,255,255,.28) 75%,transparent)}
+.hc{position:relative;z-index:2;animation:fadeUp .8s ease both}
+.hh-krt .hc{animation-delay:.12s}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.25rem}
+.eyebrow::before{content:'';display:block;width:28px;height:1.5px}
+.hh-hav .eyebrow{color:var(--hm)}.hh-hav .eyebrow::before{background:var(--hm)}
+.hh-krt .eyebrow{color:var(--kr)}.hh-krt .eyebrow::before{background:var(--kr)}
+.ht{margin-bottom:1.25rem;line-height:1.0}
+.hh-hav .ht{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,3.8vw,58px);color:var(--hd)}
+.hh-krt .ht{font-family:'Barlow Condensed',sans-serif;font-size:clamp(34px,4.2vw,64px);font-weight:900;text-transform:uppercase;color:var(--kn);letter-spacing:-1px}
+.hs{font-size:14px;line-height:1.7;margin-bottom:2.25rem;max-width:380px}
+.hh-hav .hs{color:rgba(8,80,65,.65);font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:15px}
+.hh-krt .hs{color:rgba(242,240,237,.55)}
+.heb{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 26px;transition:transform .2s,box-shadow .2s}
+.heb:hover{transform:translateX(5px)}
+.hh-hav .heb{background:var(--hd);color:#fff;border-radius:2px}
+.hh-hav .heb:hover{box-shadow:0 4px 20px rgba(8,80,65,.4)}
+.hh-krt .heb{background:var(--kr);color:#fff}
+.hh-krt .heb:hover{box-shadow:0 4px 20px rgba(192,57,43,.4)}
+.hbadge{position:absolute;top:2rem;right:2rem;z-index:3;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+.bhav{background:var(--hl);color:var(--hd)}.bkrt{background:var(--kr);color:#fff}
+.hint{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);z-index:20;pointer-events:none;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.6}}
+
+/* SUBNAV */
+.snav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;backdrop-filter:blur(14px)}
+.snav-hav{background:rgba(245,239,230,.93);border-bottom:1px solid rgba(8,80,65,.12)}
+.snav-krt{background:rgba(28,28,26,.95);border-bottom:1px solid rgba(255,255,255,.07)}
+.slogo{display:flex;align-items:center;gap:10px;cursor:pointer;transition:opacity .2s}
+.slogo:hover{opacity:.7}
+.sl-hav{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:var(--hd)}
+.sl-krt{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--kn)}
+.sl-krt span{color:var(--kr)}
+.slinks{display:flex;gap:2rem}
+.slink{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.55;cursor:pointer;transition:opacity .2s}
+.slink:hover{opacity:1}
+.snav-hav .slink{color:var(--hd)}.snav-krt .slink{color:var(--kn)}
+.bbtn{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:7px 14px;border-radius:2px;transition:opacity .2s,transform .2s}
+.bbtn:hover{opacity:.75;transform:translateX(-3px)}
+.bb-hav{color:var(--hd);border:1px solid rgba(8,80,65,.28)}.bb-krt{color:var(--kn);border:1px solid rgba(255,255,255,.22)}
+
+/* SHARED BUTTONS */
+.btn-h{display:inline-flex;align-items:center;gap:10px;background:var(--hd);color:#fff;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;border-radius:2px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.btn-h:hover{transform:translateX(4px);box-shadow:0 4px 20px rgba(8,80,65,.35)}
+.btn-hg{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--hd);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border-radius:2px;border:1.5px solid rgba(8,80,65,.3);transition:border-color .2s,transform .2s;cursor:pointer}
+.btn-hg:hover{border-color:var(--hd);transform:translateX(4px)}
+.btn-k{display:inline-flex;align-items:center;gap:10px;background:var(--kr);color:#fff;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.btn-k:hover{transform:translateX(4px);box-shadow:0 4px 20px rgba(192,57,43,.45)}
+.btn-kg{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--kn);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border:1.5px solid rgba(255,255,255,.2);transition:border-color .2s,transform .2s;cursor:pointer}
+.btn-kg:hover{border-color:var(--kn);transform:translateX(4px)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.arr{display:inline-block;transition:transform .2s}
+button:hover .arr,a:hover .arr{transform:translateX(3px)}
+
+/* HAVNEST VIEW */
+#view-havnest{background:var(--hb);color:#2C2C2A}
+.hav-hero{min-height:calc(100vh - 60px);display:flex;align-items:flex-end;padding:5rem 4rem;position:relative;overflow:hidden;background:var(--hb)}
+.hav-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 15% 85%,rgba(8,80,65,.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 10%,rgba(200,149,108,.1) 0%,transparent 45%)}
+.ring{position:absolute;border-radius:50%;pointer-events:none;border:1px solid rgba(29,158,117,.1)}
+.r1{top:-120px;right:-120px;width:600px;height:600px}.r2{top:-60px;right:-60px;width:400px;height:400px}
+.hav-hc{position:relative;z-index:2;max-width:640px}
+.h-eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--hm);margin-bottom:1.5rem}
+.h-eyebrow::before{content:'';display:block;width:28px;height:1.5px;background:var(--hm)}
+.hav-h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(40px,6vw,86px);color:var(--hd);line-height:1.0;margin-bottom:1.5rem}
+.hav-lead{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:17px;line-height:1.7;color:rgba(8,80,65,.65);max-width:480px;margin-bottom:2.5rem}
+.hav-sec{padding:5rem 4rem}.hav-sec-alt{padding:5rem 4rem;background:rgba(8,80,65,.04)}
+.hlabel{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--hm);margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+.hlabel::before{content:'';display:block;width:28px;height:1.5px;background:var(--hm)}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.hcard{background:rgba(8,80,65,.055);border:1px solid rgba(8,80,65,.12);border-radius:4px;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:8px;transition:border-color .2s,transform .2s;cursor:pointer}
+.hcard:hover{border-color:var(--hm);transform:translateY(-3px)}
+.hcard-n{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:var(--hd)}
+.hcard-d{font-size:13px;color:rgba(8,80,65,.6);line-height:1.6}
+.hcard-p{font-family:'DM Serif Display',Georgia,serif;font-size:15px;color:var(--ho);font-weight:600;margin-top:4px}
+.hpill{align-self:flex-start;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:2px;background:var(--hl);color:var(--hd)}
+.hphil{padding:6rem 4rem;background:var(--hd);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.hphil-acc{width:44px;height:3px;background:var(--ho);margin-bottom:1.5rem;border-radius:1px}
+.hphil-q{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3vw,40px);color:var(--hl);font-style:italic;line-height:1.3}
+.hphil-b{font-size:14px;line-height:1.9;color:rgba(159,225,203,.65)}
+.hsteps{display:flex;flex-direction:column}
+.hstep{display:flex;gap:2rem;padding:1.75rem 0;border-bottom:1px solid rgba(8,80,65,.1);align-items:flex-start}
+.hstep:last-child{border-bottom:none}
+.hstep-n{font-family:'DM Serif Display',Georgia,serif;font-size:36px;color:rgba(8,80,65,.15);line-height:1;min-width:50px}
+.hstep-t{font-size:15px;font-weight:600;color:var(--hd);margin-bottom:4px}
+.hstep-d{font-size:13px;color:rgba(8,80,65,.6);line-height:1.6}
+.hcta-t{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,52px);color:var(--hd);line-height:1.1}
+.hcta-d{font-size:14px;color:rgba(8,80,65,.6);line-height:1.7;max-width:520px}
+.hfooter{background:var(--hd);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}
+.hfbrand{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:var(--hl)}
+.hfmeta{font-size:12px;color:rgba(159,225,203,.5);line-height:1.8;text-align:right}
+.hfcopy{font-size:11px;color:rgba(159,225,203,.3);width:100%;text-align:center;border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;margin-top:.5rem}
+
+/* KRATE VIEW */
+#view-krate{background:var(--kb);color:var(--kn)}
+.krt-hero{min-height:calc(100vh - 60px);display:flex;align-items:flex-end;padding:5rem 4rem;position:relative;overflow:hidden;background:var(--kb)}
+.krt-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 47px,rgba(255,255,255,.025) 48px),repeating-linear-gradient(90deg,transparent,transparent 47px,rgba(255,255,255,.025) 48px)}
+.krt-hero::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 80% 90%,rgba(192,57,43,.18) 0%,transparent 50%),radial-gradient(ellipse at 20% 10%,rgba(192,57,43,.06) 0%,transparent 40%)}
+.krt-hc{position:relative;z-index:2;max-width:700px}
+.k-eyebrow{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--kr);margin-bottom:1.5rem}
+.k-eyebrow::before{content:'';display:block;width:28px;height:1.5px;background:var(--kr)}
+.krt-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,7vw,100px);font-weight:900;text-transform:uppercase;color:var(--kn);letter-spacing:-2px;line-height:.95;margin-bottom:1.5rem}
+.krt-h1 span{color:var(--kr)}
+.krt-lead{font-size:14px;line-height:1.7;color:rgba(242,240,237,.5);max-width:480px;margin-bottom:2.5rem}
+.krt-sec{padding:5rem 4rem;background:var(--kb)}
+.klabel{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--kr);margin-bottom:2.5rem;display:flex;align-items:center;gap:10px}
+.klabel::before{content:'';display:block;width:28px;height:1.5px;background:var(--kr)}
+.klist{display:flex;flex-direction:column;gap:1px}
+.kcard{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);padding:1.5rem 1.75rem;display:flex;justify-content:space-between;align-items:flex-start;transition:border-color .2s,background .2s;cursor:pointer}
+.kcard:hover{border-color:var(--kr);background:rgba(192,57,43,.05)}
+.kcard-n{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--kn);margin-bottom:5px}
+.kcard-s{font-family:'Courier New',monospace;font-size:11px;color:var(--ks);letter-spacing:.03em;line-height:1.8}
+.kbadges{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.kb{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+.kbr{background:var(--kr);color:#fff}.kbs{background:var(--ksa);color:#fff}.kbw{background:var(--kw);color:#fff}
+.kcard-p{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--kr);letter-spacing:1px;text-align:right;padding-left:2rem;flex-shrink:0}
+.kcard-a{font-size:18px;color:rgba(255,255,255,.12);margin-top:4px;transition:color .2s;text-align:right}
+.kcard:hover .kcard-a{color:var(--kr)}
+.kphil{padding:6rem 4rem;background:#111110;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.kphil-acc{width:44px;height:3px;background:var(--kr);margin-bottom:1.5rem}
+.kphil-q{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,3.5vw,46px);font-weight:900;text-transform:uppercase;color:var(--kn);line-height:1.1;letter-spacing:-.5px}
+.kphil-b{font-size:14px;line-height:1.9;color:rgba(242,240,237,.38);margin-bottom:2rem}
+.kspec{background:var(--kb);border:1px solid rgba(255,255,255,.08);padding:2rem;font-family:'Courier New',monospace;font-size:12px;color:var(--ks);line-height:2.2;letter-spacing:.03em}
+.kspec-t{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--kn);margin-bottom:.5rem}
+.kspec-l{width:100%;height:2px;background:var(--kr);margin-bottom:1rem}
+.ksteps{display:flex;flex-direction:column}
+.kstep{display:flex;gap:2rem;padding:1.75rem 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:flex-start}
+.kstep:last-child{border-bottom:none}
+.kstep-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:rgba(255,255,255,.06);line-height:1;min-width:50px;letter-spacing:-1px}
+.kstep-t{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--kn);margin-bottom:4px}
+.kstep-d{font-size:13px;color:rgba(255,255,255,.35);line-height:1.6}
+.kcta-t{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,5vw,60px);font-weight:900;text-transform:uppercase;color:var(--kn);letter-spacing:-1px;line-height:1.0}
+.kcta-d{font-size:13px;color:rgba(242,240,237,.4);line-height:1.7;max-width:480px}
+.kfooter{background:#0a0a09;padding:3rem 4rem;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}
+.kfbrand{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--kn)}
+.kfbrand span{color:var(--kr)}
+.kfmeta{font-size:12px;color:rgba(255,255,255,.25);line-height:1.8;text-align:right}
+.kfcopy{font-size:11px;color:rgba(255,255,255,.15);width:100%;text-align:center;border-top:1px solid rgba(255,255,255,.05);padding-top:1.5rem;margin-top:.5rem}
+
+.fgap{display:flex;flex-direction:column;gap:1.25rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:860px){
+  html,body{overflow:auto}
+  .view{position:relative;overflow:visible}
+  .view.active{position:relative}
+  #view-home{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .hh{min-height:50vh;padding:2.5rem 2rem}
+  .split-div{display:none}
+  .hint{display:none}
+  .snav{padding:0 1.5rem}
+  .slinks{display:none}
+  .hav-hero,.krt-hero{padding:3rem 2rem;min-height:80vh}
+  .hav-sec,.hav-sec-alt,.krt-sec{padding:3rem 2rem}
+  .hphil,.kphil{grid-template-columns:1fr;gap:2.5rem;padding:3.5rem 2rem}
+  .hfooter,.kfooter{padding:2.5rem 2rem;flex-direction:column}
+  .hfmeta,.kfmeta{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div id="view-home" class="view active">
+  <div class="split-div"></div>
+  <div class="hh hh-hav" onclick="goTo('havnest')">
+    <div class="hbadge bhav">Dom &amp; Auto</div>
+    <div class="hc">
+      <div class="eyebrow">Havnest</div>
+      <h1 class="ht">A place they<br>call their own.</h1>
+      <p class="hs">Ciepłe materiały, rzemieślnicze wykończenie, spokój dla psa i estetyka, która pasuje do Twojego stylu życia — w domu i w aucie.</p>
+      <button class="heb" onclick="event.stopPropagation();goTo('havnest')">Wejdź w Havnest <span class="arr">→</span></button>
+    </div>
+  </div>
+  <div class="hh hh-krt" onclick="goTo('krate')">
+    <div class="hbadge bkrt">Dom · Auto · Praca</div>
+    <div class="hc">
+      <div class="eyebrow">KRATE</div>
+      <h2 class="ht">ZERO OZDOBNIKÓW.<br>TYLKO STAL.</h2>
+      <p class="hs">Stal 2mm. Spaw MIG. Powłoka epoksydowa. Zamknięcie podwójne. Nic zbędnego — tylko to, co trzyma.</p>
+      <button class="heb" onclick="event.stopPropagation();goTo('krate')">Wejdź w KRATE <span class="arr">→</span></button>
+    </div>
+  </div>
+  <div class="hint">Wybierz swoją stronę</div>
+</div>
+
+<div id="view-havnest" class="view">
+  <nav class="snav snav-hav">
+    <div class="slogo" onclick="goTo('home')"><span class="sl-hav">Havnest</span></div>
+    <div class="slinks">
+      <span class="slink" onclick="ss('view-havnest','hp')">Produkty</span>
+      <span class="slink" onclick="ss('view-havnest','hf')">O nas</span>
+      <span class="slink" onclick="ss('view-havnest','hj')">Jak zamawiamy</span>
+      <span class="slink" onclick="ss('view-havnest','hk')">Kontakt</span>
+    </div>
+    <button class="bbtn bb-hav" onclick="goTo('home')">← Zmień markę</button>
+  </nav>
+  <section class="hav-hero">
+    <div class="ring r1"></div><div class="ring r2"></div>
+    <div class="hav-hc">
+      <div class="h-eyebrow">Havnest — Klatki kenelowe</div>
+      <h2 class="hav-h1">A place they<br>call their own.</h2>
+      <p class="hav-lead">Rzemieślnicze klatki kenelowe dla psów — do Twojego wnętrza i Twojego samochodu. Każda mierzona, spawana i wykańczana ręcznie w Polsce.</p>
+      <div class="btns">
+        <button class="btn-h" onclick="ss('view-havnest','hp')">Zobacz modele <span class="arr">→</span></button>
+        <button class="btn-hg" onclick="ss('view-havnest','hk')">Zamów wycenę</button>
+      </div>
+    </div>
+  </section>
+  <section class="hav-sec" id="hp">
+    <div class="hlabel">Modele</div>
+    <div class="hgrid">
+      <div class="hcard"><div class="hcard-n">Nest S</div><div class="hcard-d">Stal + drewno brzozowe · do 15 kg<br>Do salonu, sypialni lub bagażnika</div><div class="hcard-p">od 890 zł</div><span class="hpill">Bestseller</span></div>
+      <div class="hcard"><div class="hcard-n">Nest M</div><div class="hcard-d">Stal + drewno dębowe · do 30 kg<br>Wykończenie naturalnymi olejami</div><div class="hcard-p">od 1 290 zł</div></div>
+      <div class="hcard"><div class="hcard-n">Nest L</div><div class="hcard-d">Stal + dąb lite + skóra naturalna · do 50 kg<br>Do domu lub auta — pełen custom</div><div class="hcard-p">od 2 100 zł</div><span class="hpill">Premium</span></div>
+      <div class="hcard"><div class="hcard-n">Nest Auto</div><div class="hcard-d">Klatka samochodowa · drewno + stal · do 40 kg<br>Dopasowana do bagażnika Twojego auta</div><div class="hcard-p">od 1 490 zł</div></div>
+    </div>
+  </section>
+  <section class="hphil" id="hf">
+    <div><div class="hphil-acc"></div><blockquote class="hphil-q">"Pies powinien mieć swój kąt. Nie klatkę — miejsce, do którego wraca."</blockquote></div>
+    <p class="hphil-b">Każdy Havnest zaczyna się od Twojego psa i Twojego stylu życia. Dobieramy drewno, omawiamy kolor proszku, dopasowujemy rozmiar — do salonu albo do bagażnika. To nie jest produkt z magazynu. Robimy to ręcznie, w Polsce, z materiałów które nie kłamią.</p>
+  </section>
+  <section class="hav-sec-alt" id="hj">
+    <div class="hlabel">Jak zamawiamy</div>
+    <div class="hsteps">
+      <div class="hstep"><div class="hstep-n">01</div><div><div class="hstep-t">Wymiary psa</div><div class="hstep-d">Podajesz rasę, wagę i wymiary. Radzimy jeśli nie wiesz jak mierzyć.</div></div></div>
+      <div class="hstep"><div class="hstep-n">02</div><div><div class="hstep-t">Wybór modelu i przeznaczenia</div><div class="hstep-d">Dom, auto, lub oba — wybierasz model, wycena w 24h.</div></div></div>
+      <div class="hstep"><div class="hstep-n">03</div><div><div class="hstep-t">Projekt i akceptacja</div><div class="hstep-d">Rysunek do akceptacji, zaliczka 40%.</div></div></div>
+      <div class="hstep"><div class="hstep-n">04</div><div><div class="hstep-t">Produkcja</div><div class="hstep-d">Spawamy, szlifujemy, olejujemy drewno. 2–4 tygodnie.</div></div></div>
+      <div class="hstep"><div class="hstep-n">05</div><div><div class="hstep-t">Dostawa</div><div class="hstep-d">Kurier paletowy lub odbiór własny. Reszta przy odbiorze.</div></div></div>
+    </div>
+  </section>
+  <section class="hav-sec" id="hk">
+    <div class="h-eyebrow" style="margin-bottom:1.5rem">Zacznijmy</div>
+    <div class="fgap">
+      <div class="hcta-t">Zacznijmy od<br>Twojego psa.</div>
+      <p class="hcta-d">Napisz nam wymiary psa, czy klatka ma być do domu, auta, czy obu — i w jakim stylu mieszkasz lub podróżujesz. Odezwiemy się w 24h.</p>
+      <div class="btns">
+        <a href="mailto:havnest@twojadomena.pl" class="btn-h">Napisz do nas <span class="arr">→</span></a>
+        <a href="tel:+48000000000" class="btn-hg">Zadzwoń</a>
+      </div>
+    </div>
+  </section>
+  <footer class="hfooter">
+    <div class="hfbrand">Havnest</div>
+    <div class="hfmeta">Spawane ręcznie w Polsce<br>havnest@twojadomena.pl</div>
+    <div class="hfcopy">© 2025 [Nazwa spółki] · Dwie marki, jedna pracownia · <span style="cursor:pointer;text-decoration:underline;opacity:.7" onclick="goTo('home')">Wróć do wyboru marki</span></div>
+  </footer>
+</div>
+
+<div id="view-krate" class="view">
+  <nav class="snav snav-krt">
+    <div class="slogo" onclick="goTo('home')"><span class="sl-krt">KRA<span>T</span>E</span></div>
+    <div class="slinks">
+      <span class="slink" onclick="ss('view-krate','kp')">Modele</span>
+      <span class="slink" onclick="ss('view-krate','kf')">O nas</span>
+      <span class="slink" onclick="ss('view-krate','kj')">Jak zamawiamy</span>
+      <span class="slink" onclick="ss('view-krate','kk')">Kontakt</span>
+    </div>
+    <button class="bbtn bb-krt" onclick="goTo('home')">← Zmień markę</button>
+  </nav>
+  <section class="krt-hero">
+    <div class="krt-hc">
+      <div class="k-eyebrow">KRATE — Klatki kenelowe</div>
+      <h2 class="krt-h1">ZBUDOWANE<br>TAK, ŻEBY<br><span>WYTRZYMAŁO.</span></h2>
+      <p class="krt-lead">Stal 2mm. Spaw MIG. Powłoka epoksydowa. Zamknięcie podwójne. Do domu, bagażnika i pracy. Nic zbędnego — tylko to, co trzyma.</p>
+      <div class="btns">
+        <button class="btn-k" onclick="ss('view-krate','kp')">Zobacz modele <span class="arr">→</span></button>
+        <button class="btn-kg" onclick="ss('view-krate','kk')">Zamów wycenę</button>
+      </div>
+    </div>
+  </section>
+  <section class="krt-sec" id="kp">
+    <div class="klabel">Modele</div>
+    <div class="klist">
+      <div class="kcard"><div><div class="kcard-n">K1 — Klatka do auta</div><div class="kcard-s">STAL 2,0MM · EPOKSYD MATOWY · ZAMEK PODWÓJNY<br>DO 40KG · BAGAŻNIK / FURGON</div><div class="kbadges"><span class="kb kbr">Auto</span></div></div><div class="kcard-p" style="flex-shrink:0">od 1 100 zł<div class="kcard-a">→</div></div></div>
+      <div class="kcard"><div><div class="kcard-n">K2 — Klatka domowa</div><div class="kcard-s">STAL 2,0MM · CZARNY MAT · DO 60KG<br>TRENING / KENELOWANIE / IPO</div></div><div class="kcard-p" style="flex-shrink:0">od 1 350 zł<div class="kcard-a">→</div></div></div>
+      <div class="kcard"><div><div class="kcard-n">K3 — Edycja skórzana</div><div class="kcard-s">STAL 2,5MM · WYKOŃCZENIE SKÓRĄ · DO 80KG<br>PEŁEN CUSTOM · 3–4 TYGODNIE</div><div class="kbadges"><span class="kb kbs">Skóra</span><span class="kb kbw">Orzech</span></div></div><div class="kcard-p" style="flex-shrink:0">od 2 400 zł<div class="kcard-a">→</div></div></div>
+      <div class="kcard"><div><div class="kcard-n">K4 — Taktyczna</div><div class="kcard-s">STAL 3,0MM · KOMPATYBILNA Z MOLLE · DO 120KG<br>PSY SŁUŻBOWE / SPORT K9</div><div class="kbadges"><span class="kb kbr">Taktyczna</span></div></div><div class="kcard-p" style="flex-shrink:0">od 3 200 zł<div class="kcard-a">→</div></div></div>
+    </div>
+  </section>
+  <section class="kphil" id="kf">
+    <div><div class="kphil-acc"></div><blockquote class="kphil-q">ZBUDOWANE TAK,<br>ŻEBY WYTRZYMAŁO.</blockquote></div>
+    <div>
+      <p class="kphil-b">Spawamy MIG. Mierzymy pod psa. Malujemy proszkowo. Nie ma tu historii o rzemieślnikach ani zdjęć z zachodzącym słońcem — jest specyfikacja i termin dostawy. Twój pies waży 45kg. Ten model to wytrzyma. Gwarantujemy pisemnie.</p>
+      <div class="kspec"><div class="kspec-t">KRATE — Standard produkcji</div><div class="kspec-l"></div>MATERIAŁ..........STAL 2,0–3,0MM<br>SPOINA............SPAW MIG<br>POWŁOKA...........EPOKSYD PROSZKOWY<br>WYKOŃCZENIE.......CZARNY MAT<br>ZAMKNIĘCIE........PODWÓJNE<br>OPCJE.............SKÓRA / ORZECH<br>GWARANCJA.........PISEMNA</div>
+    </div>
+  </section>
+  <section class="krt-sec" id="kj">
+    <div class="klabel">Jak zamawiamy</div>
+    <div class="ksteps">
+      <div class="kstep"><div class="kstep-n">01</div><div><div class="kstep-t">Podaj wagę i przeznaczenie</div><div class="kstep-d">Dom, auto, służba — podajesz dane, resztą zajmujemy się my.</div></div></div>
+      <div class="kstep"><div class="kstep-n">02</div><div><div class="kstep-t">Wybierz model</div><div class="kstep-d">K1–K4 zależnie od wagi psa i zastosowania. Wycena w 24h.</div></div></div>
+      <div class="kstep"><div class="kstep-n">03</div><div><div class="kstep-t">Rysunek techniczny</div><div class="kstep-d">Przesyłamy dokumentację do akceptacji. Zaliczka 40%.</div></div></div>
+      <div class="kstep"><div class="kstep-n">04</div><div><div class="kstep-t">Produkcja</div><div class="kstep-d">Spawamy, szlifujemy, malujemy proszkowo. 2–4 tygodnie.</div></div></div>
+      <div class="kstep"><div class="kstep-n">05</div><div><div class="kstep-t">Dostawa</div><div class="kstep-d">Kurier paletowy lub odbiór własny. Reszta przy odbiorze.</div></div></div>
+    </div>
+  </section>
+  <section class="krt-sec" id="kk" style="border-top:1px solid rgba(255,255,255,.06)">
+    <div class="k-eyebrow" style="margin-bottom:1.5rem">Zamów</div>
+    <div class="fgap">
+      <div class="kcta-t">WYCENA<br>W 24H.</div>
+      <p class="kcta-d">Podaj wagę psa, przeznaczenie (dom / auto / służba) i preferowany model. Wyślemy wycenę z rysunkiem technicznym.</p>
+      <div class="btns">
+        <a href="mailto:krate@twojadomena.pl" class="btn-k">Napisz do nas <span class="arr">→</span></a>
+        <a href="tel:+48000000000" class="btn-kg">Zadzwoń</a>
+      </div>
+    </div>
+  </section>
+  <footer class="kfooter">
+    <div class="kfbrand">KRA<span>T</span>E</div>
+    <div class="kfmeta">Spawane ręcznie w Polsce<br>krate@twojadomena.pl</div>
+    <div class="kfcopy">© 2025 [Nazwa spółki] · Dwie marki, jedna pracownia · <span style="cursor:pointer;text-decoration:underline;opacity:.7" onclick="goTo('home')">Wróć do wyboru marki</span></div>
+  </footer>
+</div>
+
+<script>
+const views={home:document.getElementById('view-home'),havnest:document.getElementById('view-havnest'),krate:document.getElementById('view-krate')};
+let cur='home';
+function goTo(t){
+  if(t===cur)return;
+  const f=views[cur],to=views[t];
+  f.style.transition='opacity .4s ease';f.style.opacity='0';f.style.pointerEvents='none';
+  to.scrollTop=0;
+  setTimeout(()=>{
+    f.classList.remove('active');
+    to.classList.add('active');
+    to.style.transition='none';to.style.opacity='0';to.style.pointerEvents='all';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      to.style.transition='opacity .4s ease';to.style.opacity='1';
+    }));
+    cur=t;
+  },280);
+}
+function ss(vid,sid){
+  const v=document.getElementById(vid),s=document.getElementById(sid);
+  if(v&&s)v.scrollTo({top:s.offsetTop-60,behavior:'smooth'});
+}
+views.home.style.opacity='1';views.home.style.pointerEvents='all';
+</script>
+</body>
+</html>
