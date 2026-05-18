@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havnest × KRATE — Klatki kenelowe na zamówienie</title>
+<meta name="description" content="Dwie filozofie. Jedna pracownia. Klatki kenelowe spawane ręcznie w Polsce — Havnest dla domu, KRATE do auta i pracy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Barlow', sans-serif; background: #111; overflow-x: hidden; color: #fff; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; font-family: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ══════════════════════════════════════════
+   CSS VARIABLES
+══════════════════════════════════════════ */
+:root {
+  /* Havnest */
+  --hav-dark:   #085041;
+  --hav-mid:    #1D9E75;
+  --hav-light:  #9FE1CB;
+  --hav-bg:     #F5EFE6;
+  --hav-oak:    #C8956C;
+  --hav-text:   #2C2C2A;
+  /* KRATE */
+  --krt-black:  #1C1C1A;
+  --krt-steel:  #4A4744;
+  --krt-bone:   #F2F0ED;
+  --krt-red:    #C0392B;
+  --krt-saddle: #7C5A3A;
+  --krt-walnut: #5C3D1E;
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 60px;
+  background: rgba(13,13,11,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-brand {
+  font-size: 11px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+}
+.nav-links {
+  display: flex; gap: 2.5rem; align-items: center;
+}
+.nav-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.45);
+  transition: color .2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta { display: flex; gap: 8px; }
+.nav-btn {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 7px 16px;
+  border-radius: 2px; transition: opacity .2s, transform .15s;
+}
+.nav-btn:hover { opacity: .85; transform: translateY(-1px); }
+.nav-btn-hav { background: var(--hav-mid); color: #fff; }
+.nav-btn-krt { background: var(--krt-red); color: #fff; }
+
+/* Mobile nav */
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; padding: 4px;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: rgba(255,255,255,.6); transition: all .3s;
+}
+.mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0;
+  background: rgba(13,13,11,0.98); border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; z-index: 199;
+}
+.mobile-menu a {
+  font-size: 13px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255,255,255,.6); padding: .5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.mobile-menu .mobile-btns { display: flex; gap: 8px; margin-top: .5rem; }
+.mobile-menu .nav-btn { flex: 1; text-align: center; }
+
+/* ══════════════════════════════════════════
+   HERO SPLIT — LEWO / PRAWO
+══════════════════════════════════════════ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  min-height: 100vh;
+  padding-top: 60px;
+  position: relative;
+}
+.hero-half {
+  position: relative;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 4rem 3.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex .65s cubic-bezier(.4,0,.2,1);
+}
+.hero-half:hover { flex: 1.12; }
+
+/* Havnest half */
+.hero-hav {
+  background: var(--hav-bg);
+}
+.hero-hav::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 80%, rgba(8,80,65,.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 15%, rgba(200,149,108,.12) 0%, transparent 50%),
+    linear-gradient(170deg, rgba(8,80,65,.04) 0%, rgba(8,80,65,.22) 100%);
+  pointer-events: none;
+}
+/* Decorative organic circle */
+.hero-hav::after {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29,158,117,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* KRATE half */
+.hero-krt {
+  background: var(--krt-black);
+}
+.hero-krt::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,   transparent, transparent 47px, rgba(255,255,255,.028) 48px),
+    repeating-linear-gradient(90deg,  transparent, transparent 47px, rgba(255,255,255,.028) 48px);
+  pointer-events: none;
+}
+.hero-krt::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 80%, rgba(192,57,43,.14) 0%, transparent 55%),
+    linear-gradient(160deg, rgba(192,57,43,.04) 0%, rgba(0,0,0,.5) 100%);
+  pointer-events: none;
+}
+
+/* Hero content */
+.hero-content {
+  position: relative; z-index: 2;
+  animation: fadeUp .85s ease both;
+}
+.hero-krt .hero-content { animation-delay: .15s; }
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; margin-bottom: 1.25rem;
+}
+.hero-hav .hero-eyebrow { color: var(--hav-mid); }
+.hero-krt .hero-eyebrow { color: var(--krt-red); }
+.hero-eyebrow::before {
+  content: ''; display: block; width: 28px; height: 1.5px;
+}
+.hero-hav .hero-eyebrow::before { background: var(--hav-mid); }
+.hero-krt .hero-eyebrow::before { background: var(--krt-red); }
+
+.hero-title { margin-bottom: 1.25rem; line-height: 1.0; }
+.hero-hav .hero-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(30px, 3.8vw, 58px);
+  color: var(--hav-dark);
+}
+.hero-krt .hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(34px, 4.2vw, 64px);
+  font-weight: 900; text-transform: uppercase;
+  color: var(--krt-bone); letter-spacing: -1px;
+}
+
+.hero-sub {
+  font-size: 14px; line-height: 1.7;
+  margin-bottom: 2.25rem; max-width: 380px;
+}
+.hero-hav .hero-sub {
+  color: rgba(8,80,65,.65);
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-style: italic; font-size: 15px;
+}
+.hero-krt .hero-sub {
+  color: rgba(242,240,237,.55);
+  font-family: 'Barlow', sans-serif;
+}
+
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 14px 26px;
+  transition: transform .2s, box-shadow .2s;
+}
+.hero-btn:hover { transform: translateX(5px); }
+.hero-hav .hero-btn {
+  background: var(--hav-dark); color: #fff; border-radius: 2px;
+}
+.hero-hav .hero-btn:hover { box-shadow: 0 4px 20px rgba(8,80,65,.4); }
+.hero-krt .hero-btn {
+  background: var(--krt-red); color: #fff; border-radius: 0;
+}
+.hero-krt .hero-btn:hover { box-shadow: 0 4px 20px rgba(192,57,43,.45); }
+
+.arrow-icon { transition: transform .2s; }
+.hero-btn:hover .arrow-icon { transform: translateX(4px); }
+
+/* Hero badge */
+.hero-badge {
+  position: absolute; top: 1.5rem; right: 2rem; z-index: 3;
+  font-size: 9px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; padding: 5px 11px; border-radius: 2px;
+}
+.badge-hav { background: var(--hav-light); color: var(--hav-dark); }
+.badge-krt { background: var(--krt-red); color: #fff; }
+
+/* Split divider — pionowa linia między lewą a prawą połową */
+.hero-divider {
+  position: absolute; top: 60px; bottom: 0; left: 50%; width: 1px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,.25) 20%, rgba(255,255,255,.25) 80%, transparent 100%);
+  pointer-events: none; z-index: 10;
+}
+
+/* ══════════════════════════════════════════
+   SHARED STRIP
+══════════════════════════════════════════ */
+.shared-strip {
+  background: #161614;
+  border-top: 1px solid rgba(255,255,255,.07);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 2.5rem 3.5rem;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+}
+.shared-strip p {
+  font-size: 13px; color: rgba(255,255,255,.42);
+  max-width: 560px; line-height: 1.7;
+}
+.shared-strip p strong { color: rgba(255,255,255,.82); }
+.strip-brands { display: flex; gap: 1.5rem; align-items: center; flex-shrink: 0; }
+.strip-brand {
+  font-size: 11px; font-weight: 700; letter-spacing: .18em;
+  padding: 7px 16px; border-radius: 2px; white-space: nowrap;
+}
+.sb-hav { background: var(--hav-dark); color: var(--hav-light); }
+.sb-krt { background: var(--krt-black); color: var(--krt-bone); border: 1px solid var(--krt-steel); }
+.strip-sep { color: rgba(255,255,255,.18); font-size: 20px; font-weight: 300; }
+
+/* ══════════════════════════════════════════
+   PRODUCTS SECTION
+══════════════════════════════════════════ */
+.products { display: grid; grid-template-columns: 1fr 1fr; }
+
+.product-col { padding: 5rem 3.5rem; }
+.product-col-hav { background: var(--hav-bg); }
+.product-col-krt { background: var(--krt-black); }
+
+.col-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; }
+.product-col-hav .col-header { border-bottom: 1px solid rgba(8,80,65,.15); }
+.product-col-krt .col-header { border-bottom: 1px solid rgba(255,255,255,.08); }
+
+.hav-brand-name {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 24px; color: var(--hav-dark); margin-bottom: 4px;
+}
+.krt-brand-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 900; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--krt-bone); margin-bottom: 4px;
+}
+.krt-brand-name span { color: var(--krt-red); }
+
+.col-sub { font-size: 12px; }
+.product-col-hav .col-sub {
+  color: var(--hav-mid); font-style: italic;
+  font-family: 'DM Serif Display', Georgia, serif;
+}
+.product-col-krt .col-sub {
+  color: var(--krt-steel); letter-spacing: .08em;
+  text-transform: uppercase; font-size: 10px; font-weight: 600;
+}
+
+/* Product cards */
+.product-cards { display: flex; flex-direction: column; gap: 12px; }
+.product-card {
+  padding: 1.35rem 1.25rem; border-radius: 4px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  transition: transform .2s, border-color .2s; cursor: pointer;
+}
+.product-card:hover { transform: translateX(5px); }
+
+.product-col-hav .product-card {
+  background: rgba(8,80,65,.055);
+  border: 1px solid rgba(8,80,65,.13);
+}
+.product-col-hav .product-card:hover {
+  border-color: var(--hav-mid);
+}
+.product-col-krt .product-card {
+  background: rgba(255,255,255,.032);
+  border: 1px solid rgba(255,255,255,.07);
+}
+.product-col-krt .product-card:hover {
+  border-color: var(--krt-red);
+}
+
+.card-left { flex: 1; }
+.card-name { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+.product-col-hav .card-name {
+  color: var(--hav-dark);
+  font-family: 'DM Serif Display', Georgia, serif;
+}
+.product-col-krt .card-name {
+  color: var(--krt-bone);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 16px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.card-desc { font-size: 12px; line-height: 1.6; margin-bottom: 6px; }
+.product-col-hav .card-desc { color: rgba(8,80,65,.6); }
+.product-col-krt .card-desc {
+  color: var(--krt-steel);
+  font-family: 'Courier New', monospace;
+  font-size: 11px; letter-spacing: .02em;
+}
+
+.card-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+.card-badge {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+}
+.badge-hav-green  { background: var(--hav-light);  color: var(--hav-dark); }
+.badge-krt-red    { background: var(--krt-red);     color: #fff; }
+.badge-krt-saddle { background: var(--krt-saddle);  color: #fff; }
+.badge-krt-walnut { background: var(--krt-walnut);  color: #fff; }
+
+.card-right { text-align: right; padding-left: 1rem; flex-shrink: 0; }
+.card-price { font-size: 14px; font-weight: 700; white-space: nowrap; }
+.product-col-hav .card-price {
+  color: var(--hav-oak);
+  font-family: 'DM Serif Display', Georgia, serif;
+}
+.product-col-krt .card-price {
+  color: var(--krt-red);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; letter-spacing: 1px;
+}
+.card-arrow {
+  font-size: 18px; color: rgba(255,255,255,.2);
+  margin-top: 4px; transition: color .2s;
+}
+.product-col-hav .card-arrow { color: rgba(8,80,65,.2); }
+.product-card:hover .card-arrow { color: rgba(255,255,255,.6); }
+.product-col-hav .product-card:hover .card-arrow { color: var(--hav-mid); }
+
+/* ══════════════════════════════════════════
+   PHILOSOPHY
+══════════════════════════════════════════ */
+.philosophy { display: grid; grid-template-columns: 1fr 1fr; }
+.phil-col { padding: 5.5rem 3.5rem; }
+.phil-hav { background: var(--hav-dark); }
+.phil-krt { background: #111110; }
+
+.phil-accent { width: 44px; height: 3px; margin-bottom: 1.75rem; border-radius: 1px; }
+.phil-hav .phil-accent { background: var(--hav-oak); }
+.phil-krt .phil-accent { background: var(--krt-red); }
+
+.phil-quote { margin-bottom: 1.75rem; line-height: 1.35; }
+.phil-hav .phil-quote {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(18px, 2.2vw, 30px);
+  color: var(--hav-light); font-style: italic;
+}
+.phil-krt .phil-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(20px, 2.4vw, 32px);
+  color: var(--krt-bone); font-weight: 900;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+
+.phil-body { font-size: 13px; line-height: 1.9; }
+.phil-hav .phil-body { color: rgba(159,225,203,.65); }
+.phil-krt .phil-body { color: rgba(242,240,237,.38); }
+
+/* ══════════════════════════════════════════
+   PROCESS STRIP
+══════════════════════════════════════════ */
+.process {
+  background: #13130f;
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 4rem 3.5rem;
+  text-align: center;
+}
+.process-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  margin-bottom: 3rem;
+}
+.process-steps {
+  display: flex; justify-content: center;
+  gap: 0; flex-wrap: wrap; max-width: 960px; margin: 0 auto;
+}
+.process-step {
+  flex: 1; min-width: 160px; padding: 0 1.5rem;
+  position: relative;
+}
+.process-step:not(:last-child)::after {
+  content: '→';
+  position: absolute; right: -10px; top: 16px;
+  color: rgba(255,255,255,.15); font-size: 18px;
+}
+.step-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px; font-weight: 900; letter-spacing: -1px;
+  color: rgba(255,255,255,.08); line-height: 1; margin-bottom: 8px;
+}
+.step-title {
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7);
+  margin-bottom: 5px; letter-spacing: .02em;
+}
+.step-desc { font-size: 12px; color: rgba(255,255,255,.3); line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   CTA SECTION
+══════════════════════════════════════════ */
+.cta-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.cta-col {
+  padding: 5rem 3.5rem;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+}
+.cta-hav { background: var(--hav-bg); }
+.cta-krt { background: var(--krt-black); }
+
+.cta-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.cta-hav .cta-label { color: var(--hav-mid); }
+.cta-krt .cta-label { color: var(--krt-red); }
+.cta-label::before { content: ''; display: block; width: 20px; height: 1.5px; }
+.cta-hav .cta-label::before { background: var(--hav-mid); }
+.cta-krt .cta-label::before { background: var(--krt-red); }
+
+.cta-headline { margin-bottom: .75rem; }
+.cta-hav .cta-headline {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(22px,2.8vw,38px); color: var(--hav-dark);
+}
+.cta-krt .cta-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(24px,3vw,42px); font-weight: 900;
+  text-transform: uppercase; color: var(--krt-bone);
+  letter-spacing: -0.5px;
+}
+
+.cta-desc { font-size: 13px; line-height: 1.7; margin-bottom: 2rem; }
+.cta-hav .cta-desc { color: rgba(8,80,65,.65); }
+.cta-krt .cta-desc { color: rgba(242,240,237,.45); }
+
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 14px 28px;
+  transition: transform .2s, box-shadow .2s;
+  border-radius: 2px;
+}
+.cta-btn:hover { transform: translateX(4px); }
+.cta-hav .cta-btn { background: var(--hav-dark); color: #fff; }
+.cta-hav .cta-btn:hover { box-shadow: 0 4px 20px rgba(8,80,65,.4); }
+.cta-krt .cta-btn { background: var(--krt-red); color: #fff; border-radius: 0; }
+.cta-krt .cta-btn:hover { box-shadow: 0 4px 20px rgba(192,57,43,.4); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: #0a0a09;
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding: 3rem 3.5rem 2rem;
+}
+.footer-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.footer-brands { display: flex; align-items: center; gap: 1.5rem; }
+.footer-hav {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 22px; color: var(--hav-mid);
+}
+.footer-sep { color: rgba(255,255,255,.1); font-size: 22px; font-weight: 300; }
+.footer-krt {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 900;
+  letter-spacing: 3px; color: var(--krt-bone);
+}
+.footer-krt span { color: var(--krt-red); }
+
+.footer-cols { display: flex; gap: 4rem; flex-wrap: wrap; }
+.footer-col-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  margin-bottom: 1rem;
+}
+.footer-col a, .footer-col p {
+  display: block; font-size: 13px;
+  color: rgba(255,255,255,.45); margin-bottom: .5rem; line-height: 1.5;
+}
+.footer-col a:hover { color: rgba(255,255,255,.8); }
+
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-legal { font-size: 11px; color: rgba(255,255,255,.2); }
+.footer-parent {
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.15);
+}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+
+  .hero { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; min-height: 100vh; }
+  .hero-half { padding: 2.5rem 2rem; justify-content: flex-end; min-height: 50vh; }
+  .hero-divider { display: none; }
+  .hero-hav .hero-title, .hero-krt .hero-title { font-size: clamp(28px,8vw,44px); }
+
+  .shared-strip { padding: 2rem; flex-direction: column; gap: 1.5rem; }
+  .strip-brands { width: 100%; }
+
+  .products { grid-template-columns: 1fr; }
+  .product-col { padding: 3rem 2rem; }
+
+  .philosophy { grid-template-columns: 1fr; }
+  .phil-col { padding: 3.5rem 2rem; }
+
+  .cta-section { grid-template-columns: 1fr; }
+  .cta-col { padding: 3rem 2rem; }
+
+  .process { padding: 3rem 1.5rem; }
+  .process-steps { gap: 2rem; }
+  .process-step::after { display: none; }
+
+  footer { padding: 2.5rem 2rem 1.5rem; }
+  .footer-top { flex-direction: column; }
+  .footer-cols { gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<nav>
+  <div class="nav-brand">Crafted Kennels</div>
+  <div class="nav-links">
+    <a href="#produkty">Produkty</a>
+    <a href="#filozofia">O nas</a>
+    <a href="#jak-zamawiamy">Jak zamawiamy</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+  <div class="nav-cta">
+    <button class="nav-btn nav-btn-hav" onclick="document.getElementById('havnest').scrollIntoView({behavior:'smooth'})">Havnest</button>
+    <button class="nav-btn nav-btn-krt" onclick="document.getElementById('krate').scrollIntoView({behavior:'smooth'})">KRATE</button>
+  </div>
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#produkty" onclick="closeMobileMenu()">Produkty</a>
+  <a href="#filozofia" onclick="closeMobileMenu()">O nas</a>
+  <a href="#jak-zamawiamy" onclick="closeMobileMenu()">Jak zamawiamy</a>
+  <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
+  <div class="mobile-btns">
+    <button class="nav-btn nav-btn-hav" onclick="closeMobileMenu();document.getElementById('havnest').scrollIntoView({behavior:'smooth'})">Havnest</button>
+    <button class="nav-btn nav-btn-krt" onclick="closeMobileMenu();document.getElementById('krate').scrollIntoView({behavior:'smooth'})">KRATE</button>
+  </div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div style="position:relative">
+  <div class="hero">
+    <div class="hero-half hero-hav" onclick="document.getElementById('havnest').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-badge badge-hav">Dom &amp; Auto</div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Havnest</div>
+        <h1 class="hero-title">A place they<br>call their own.</h1>
+        <p class="hero-sub">Ciepłe materiały, rzemieślnicze wykończenie, spokój dla psa i estetyka, która pasuje do Twojego stylu życia — w domu i w aucie.</p>
+        <button class="hero-btn" onclick="event.stopPropagation();document.getElementById('havnest').scrollIntoView({behavior:'smooth'})">
+          Odkryj Havnest
+          <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hero-half hero-krt" onclick="document.getElementById('krate').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-badge badge-krt">Dom · Auto · Praca</div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">KRATE</div>
+        <h2 class="hero-title">ZERO OZDOBNIKÓW.<br>TYLKO STAL.</h2>
+        <p class="hero-sub">Stal 2mm. Spaw MIG. Powłoka epoksydowa. Zamknięcie podwójne. Nic zbędnego — tylko to, co trzyma.</p>
+        <button class="hero-btn" onclick="event.stopPropagation();document.getElementById('krate').scrollIntoView({behavior:'smooth'})">
+          Skonfiguruj KRATE
+          <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-divider" aria-hidden="true"></div>
+</div>
+
+<!-- ═══════════════ SHARED STRIP ═══════════════ -->
+<div class="shared-strip fade-in">
+  <p><strong>Jedna pracownia. Dwie filozofie.</strong> Oba produkty spawane ręcznie w Polsce, mierzone pod konkretnego psa, wykańczane na zamówienie. Różni je estetyka i cel — łączy jakość wykonania i materiał.</p>
+  <div class="strip-brands">
+    <div class="strip-brand sb-hav">Havnest</div>
+    <div class="strip-sep">×</div>
+    <div class="strip-brand sb-krt">KRATE</div>
+  </div>
+</div>
+
+<!-- ═══════════════ PRODUCTS ═══════════════ -->
+<div class="products" id="produkty">
+
+  <!-- HAVNEST -->
+  <div class="product-col product-col-hav fade-in" id="havnest">
+    <div class="col-header">
+      <div class="hav-brand-name">Havnest</div>
+      <div class="col-sub">Klatki rzemieślnicze — ciepłe, dopasowane, do domu i auta</div>
+    </div>
+    <div class="product-cards">
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">Nest S</div>
+          <div class="card-desc">Stal + drewno brzozowe · do 15 kg<br>Idealna do salonu lub sypialni</div>
+          <div class="card-badges">
+            <span class="card-badge badge-hav-green">Bestseller</span>
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 890 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">Nest M</div>
+          <div class="card-desc">Stal + drewno dębowe · do 30 kg<br>Wykończenie naturalnymi olejami</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 1 290 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">Nest L — Oak Edition</div>
+          <div class="card-desc">Stal + dąb lite + skóra naturalna · do 50 kg<br>Projekt na zamówienie, 3–4 tygodnie</div>
+          <div class="card-badges">
+            <span class="card-badge badge-hav-green">Premium</span>
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 2 100 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">Nest Auto</div>
+          <div class="card-desc">Klatka samochodowa · drewno + stal · do 40 kg<br>Dopasowana do bagażnika Twojego auta</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 1 490 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KRATE -->
+  <div class="product-col product-col-krt fade-in" id="krate">
+    <div class="col-header">
+      <div class="krt-brand-name">KRA<span>T</span>E</div>
+      <div class="col-sub">Stal · Powłoka proszkowa · Spawane ręcznie · Polska</div>
+    </div>
+    <div class="product-cards">
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">K1 — KLATKA DO AUTA</div>
+          <div class="card-desc">STAL 2,0MM · EPOKSYD MATOWY · ZAMEK PODWÓJNY<br>DO 40KG · BAGAŻNIK / FURGON</div>
+          <div class="card-badges">
+            <span class="card-badge badge-krt-red">Auto</span>
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 1 100 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">K2 — KLATKA DOMOWA</div>
+          <div class="card-desc">STAL 2,0MM · CZARNY MAT · DO 60KG<br>TRENING / KENELOWANIE / IPO</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 1 350 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">K3 — EDYCJA SKÓRZANA</div>
+          <div class="card-desc">STAL 2,5MM · WYKOŃCZENIE SKÓRĄ · DO 80KG<br>PEŁEN CUSTOM · 3–4 TYGODNIE</div>
+          <div class="card-badges">
+            <span class="card-badge badge-krt-saddle">Skóra</span>
+            <span class="card-badge badge-krt-walnut">Orzech</span>
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 2 400 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="card-left">
+          <div class="card-name">K4 — TAKTYCZNA</div>
+          <div class="card-desc">STAL 3,0MM · KOMPATYBILNA Z MOLLE · DO 120KG<br>PSY SŁUŻBOWE / SPORT K9</div>
+          <div class="card-badges">
+            <span class="card-badge badge-krt-red">Taktyczna</span>
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">od 3 200 zł</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PHILOSOPHY ═══════════════ -->
+<div class="philosophy" id="filozofia">
+  <div class="phil-col phil-hav fade-in">
+    <div class="phil-accent"></div>
+    <blockquote class="phil-quote">"Pies powinien mieć swój kąt. Nie klatkę — dom w domu."</blockquote>
+    <p class="phil-body">Każdy Havnest zaczyna się od Twojego psa i Twojego wnętrza. Dobieramy drewno, omawiamy kolor proszku, dopasowujemy rozmiar. To nie jest produkt z magazynu — to jest mebel dla Twojego zwierzęcia. Robimy to ręcznie, w Polsce, z materiałów które nie kłamią.</p>
+  </div>
+  <div class="phil-col phil-krt fade-in">
+    <div class="phil-accent"></div>
+    <blockquote class="phil-quote">ZBUDOWANE TAK, ŻEBY WYTRZYMAŁO.</blockquote>
+    <p class="phil-body">Spawamy MIG. Mierzymy pod psa. Malujemy proszkowo. Nie ma tu historii o rzemieślnikach ani zdjęć z zachodzącym słońcem — jest specyfikacja i jest termin dostawy. Twój pies waży 45kg. Ten model to wytrzyma. Gwarantujemy pisemnie.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ PROCESS ═══════════════ -->
+<div class="process fade-in" id="jak-zamawiamy">
+  <div class="process-title">Jak to działa</div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Wymiary psa</div>
+      <div class="step-desc">Podajesz rasę, wagę i wymiary. Radzimy jeśli nie wiesz jak mierzyć.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Wybór modelu</div>
+      <div class="step-desc">Wybierasz linię (Havnest lub KRATE) i konfigurację. Wycena w 24h.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Projekt i akceptacja</div>
+      <div class="step-desc">Przesyłamy rysunek techniczny do akceptacji. Zaliczka 40%.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Produkcja</div>
+      <div class="step-desc">Spawamy, szlifujemy, malujemy. Czas realizacji 2–4 tygodnie.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <div class="step-title">Dostawa</div>
+      <div class="step-desc">Kurierem paletowym lub odbiór osobisty. Reszta płatności przy odbiorze.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<div class="cta-section">
+  <div class="cta-col cta-hav fade-in">
+    <div class="cta-label">Havnest</div>
+    <div class="cta-headline">Zacznijmy od Twojego psa.</div>
+    <p class="cta-desc">Napisz nam wymiary psa, czy klatka ma być do domu, auta, czy obu — i w jakim stylu mieszkasz lub podróżujesz. Odezwiemy się z propozycją w 24h.</p>
+    <a href="mailto:havnest@[twojadomena].pl" class="cta-btn">
+      Wycena Havnest
+      <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="cta-col cta-krt fade-in" id="kontakt">
+    <div class="cta-label">KRATE</div>
+    <div class="cta-headline">WYCENA<br>W 24H.</div>
+    <p class="cta-desc">Podaj wagę psa, przeznaczenie (dom / auto / sport) i preferowany model. Wyślemy wycenę z rysunkiem technicznym.</p>
+    <a href="mailto:krate@[twojadomena].pl" class="cta-btn">
+      Zamów wycenę KRATE
+      <svg class="arrow-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brands">
+        <div class="footer-hav">Havnest</div>
+        <div class="footer-sep">·</div>
+        <div class="footer-krt">KRA<span>T</span>E</div>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Produkty</div>
+        <a href="#havnest">Havnest — rzemieślnicze</a>
+        <a href="#krate">KRATE — stalowe</a>
+        <a href="#jak-zamawiamy">Jak zamawiamy</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Kontakt</div>
+        <p>kontakt@[twojadomena].pl</p>
+        <p>Polska · ręczna produkcja</p>
+        <p>Czas realizacji: 2–4 tyg.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Social</div>
+        <a href="#">Instagram — Havnest</a>
+        <a href="#">Instagram — KRATE</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2025 [Nazwa spółki]. Wszelkie prawa zastrzeżone.</div>
+    <div class="footer-parent">Dwie marki · jedna pracownia · Polska</div>
+  </div>
+</footer>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.style.display = menuOpen ? 'flex' : 'none';
+    hamburger.setAttribute('aria-expanded', menuOpen);
+  });
+
+  function closeMobileMenu() {
+    menuOpen = false;
+    mobileMenu.style.display = 'none';
+    hamburger.setAttribute('aria-expanded', false);
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
