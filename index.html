@@ -538,23 +538,126 @@ footer {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ══════════════════════════
-   MOBILE
+   TABLET (max 900px)
 ══════════════════════════ */
 @media (max-width: 900px) {
-  nav { padding: 0 1.5rem; }
+  nav { padding: 0 1.25rem; }
   .nav-links { display: none; }
-  .hero-inner { padding: 4rem 1.5rem 3rem; }
-  .hero-stats { flex-direction: column; }
-  .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); padding: 1.5rem; }
-  .stat:last-child { border-bottom: none; }
-  #filozofia, #produkty, #spec, #proces, #kontakt { padding: 4rem 1.5rem; }
-  .filozofia-grid, .spec-grid, .kontakt-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .nav-cta { padding: 7px 14px; font-size: 10px; }
+
+  .hero-inner { padding: 3rem 1.25rem 2rem; }
+  .hero-h1 { letter-spacing: -1px; }
+  .hero-sub { font-size: 12px; }
+  .hero-scroll { display: none; }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .stat {
+    border-right: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 1.25rem 1rem;
+  }
+  .stat:nth-child(3) { border-right: none; }
+  .stat:nth-child(4), .stat:nth-child(5) { border-bottom: none; }
+
+  #filozofia, #produkty, #spec, #proces, #kontakt { padding: 4rem 1.25rem; }
+  .filozofia-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .spec-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .kontakt-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .proces-inner { grid-template-columns: 1fr; gap: 2rem; }
+
   .produkty-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .produkt-body { grid-template-columns: 1fr; }
-  .produkt-spec { grid-column: 1; grid-row: auto; }
-  footer { flex-direction: column; padding: 2rem 1.5rem; text-align: center; }
-  .footer-copy { text-align: center; }
+  .produkty-header p { text-align: left; }
+
+  .produkt { grid-template-columns: 44px 1fr; }
+  .produkt-right { display: none; }
+  .produkt-body { grid-template-columns: 1fr; gap: .4rem; }
+  .produkt-spec { grid-column: 1; grid-row: auto; font-size: 10px; }
+  .produkt-name { font-size: 17px; }
+
+  /* show price inside body on mobile */
+  .produkt-body::after {
+    content: attr(data-price);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; font-weight: 900;
+    color: var(--red); letter-spacing: .5px;
+  }
+
+  footer { flex-direction: column; padding: 2rem 1.25rem; text-align: center; gap: 1rem; }
+  .footer-meta, .footer-copy { text-align: center; }
+}
+
+/* ══════════════════════════
+   MOBILE (max 480px)
+══════════════════════════ */
+@media (max-width: 480px) {
+  nav { height: 52px; padding: 0 1rem; }
+  .nav-logo img { height: 30px; width: 30px; }
+  .nav-logo > span { font-size: 18px; letter-spacing: 3px; margin-left: 8px; }
+  .nav-cta { display: none; }
+
+  /* Hamburger menu button */
+  .nav-hamburger {
+    display: flex; flex-direction: column; gap: 5px;
+    padding: 4px; cursor: pointer;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: rgba(242,240,237,.7); transition: all .3s;
+  }
+
+  .hero { padding-top: 52px; }
+  .hero-inner { padding: 2.5rem 1rem 1.5rem; }
+  .hero-eyebrow { font-size: 9px; margin-bottom: 1rem; }
+  .hero-h1 { font-size: clamp(48px, 14vw, 72px); letter-spacing: -1px; line-height: .9; margin-bottom: 1.5rem; }
+  .hero-sub { font-size: 11px; line-height: 1.9; margin-bottom: 2rem; }
+  .hero-btns { flex-direction: column; gap: 10px; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; padding: 14px 20px; }
+
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 1rem; }
+  .stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,.06); }
+  .stat:nth-child(2) { border-right: none; }
+  .stat-n { font-size: 26px; }
+  .stat-label { font-size: 8px; }
+
+  #filozofia, #produkty, #spec, #proces, #kontakt { padding: 3rem 1rem; }
+
+  .section-title { font-size: 28px; }
+  .filozofia-quote { font-size: clamp(24px, 8vw, 36px); }
+  .filozofia-body { font-size: 13px; }
+
+  .rule-title { font-size: 13px; }
+  .rule-desc { font-size: 12px; }
+  .filozofia-rule { gap: 1rem; padding: 1.25rem 0; }
+
+  /* Produkty — full width cards */
+  .produkt { grid-template-columns: 36px 1fr; }
+  .produkt-num { padding: 1.5rem 0 1.5rem 1rem; font-size: 10px; }
+  .produkt-body { padding: 1.25rem 1rem; }
+  .produkt-name { font-size: 15px; }
+  .produkt-spec { font-size: 9px; line-height: 1.8; }
+  .pbadge { font-size: 7px; padding: 2px 6px; }
+
+  .spec-sheet { padding: 1.5rem; }
+  .spec-row { font-size: 10px; padding: .4rem 0; }
+  .spec-sheet-title { font-size: 12px; letter-spacing: 2px; }
+
+  .step-n { font-size: 32px; min-width: 44px; }
+  .step-title { font-size: 14px; }
+  .step-desc { font-size: 12px; }
+  .proces-step { gap: 1.25rem; padding: 1.25rem 0; }
+
+  .kontakt-title { font-size: clamp(30px, 9vw, 48px); }
+  .kontakt-item { padding: 1.1rem; }
+  .ki-val { font-size: 13px; }
+
+  footer { padding: 1.75rem 1rem; gap: .75rem; }
+  .footer-logo { font-size: 18px; }
+  .footer-meta { font-size: 9px; }
+  .footer-copy { font-size: 9px; }
 }
 </style>
 </head>
@@ -575,7 +678,19 @@ footer {
   <button class="nav-cta" onclick="document.getElementById('kontakt').scrollIntoView({behavior:'smooth'})">
     Zamów wycenę
   </button>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" style="display:none">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" style="display:none;position:fixed;top:52px;left:0;right:0;z-index:99;background:rgba(17,17,16,0.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1.5rem 1rem;flex-direction:column;gap:0">
+  <a onclick="mobileNav('filozofia')" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:block">Filozofia</a>
+  <a onclick="mobileNav('produkty')"  style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:block">Modele</a>
+  <a onclick="mobileNav('spec')"      style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:block">Specyfikacja</a>
+  <a onclick="mobileNav('proces')"    style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:block">Jak zamawiamy</a>
+  <a onclick="mobileNav('kontakt')"   style="font-family:'Barlow Condensed',monospace;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--red);padding:1rem;text-align:center;margin-top:1rem;display:block">Zamów wycenę →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -683,8 +798,7 @@ footer {
   <div class="produkty-list">
     <div class="produkt reveal">
       <div class="produkt-num">K1</div>
-      <div class="produkt-body">
-        <div class="produkt-name">Klatka do auta</div>
+      <div class="produkt-body" data-price="od 1 100 zł">
         <div class="produkt-spec">
           STAL............2,0MM<br>
           POWŁOKA.........MAL. PROSZKOWE<br>
@@ -703,7 +817,7 @@ footer {
     </div>
     <div class="produkt reveal">
       <div class="produkt-num">K2</div>
-      <div class="produkt-body">
+      <div class="produkt-body" data-price="od 1 350 zł">
         <div class="produkt-name">Klatka domowa</div>
         <div class="produkt-spec">
           STAL............2,0MM<br>
@@ -721,7 +835,7 @@ footer {
     </div>
     <div class="produkt reveal">
       <div class="produkt-num">K3</div>
-      <div class="produkt-body">
+      <div class="produkt-body" data-price="od 2 400 zł">
         <div class="produkt-name">Edycja skórzana</div>
         <div class="produkt-spec">
           STAL............2,5MM<br>
@@ -742,7 +856,7 @@ footer {
     </div>
     <div class="produkt reveal">
       <div class="produkt-num">K4</div>
-      <div class="produkt-body">
+      <div class="produkt-body" data-price="od 3 200 zł">
         <div class="produkt-name">Taktyczna</div>
         <div class="produkt-spec">
           STAL............3,0MM<br>
@@ -915,6 +1029,33 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Show hamburger on mobile
+function checkMobile() {
+  const ham = document.getElementById('hamburger');
+  if (window.innerWidth <= 480) {
+    ham.style.display = 'flex';
+  } else {
+    ham.style.display = 'none';
+    document.getElementById('mobile-menu').style.display = 'none';
+  }
+}
+checkMobile();
+window.addEventListener('resize', checkMobile);
+
+// Hamburger toggle
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  const menu = document.getElementById('mobile-menu');
+  menu.style.display = menuOpen ? 'flex' : 'none';
+}
+
+function mobileNav(id) {
+  menuOpen = false;
+  document.getElementById('mobile-menu').style.display = 'none';
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
